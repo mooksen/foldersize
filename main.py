@@ -1,6 +1,8 @@
 import os
 import sys
 import matplotlib.pyplot as plt
+from matplotlib.patches import Wedge as MplWedge
+import matplotlib
 
 
 def get_folder_size(path: str) -> int:
@@ -22,7 +24,7 @@ def format_size(size_bytes: int) -> str:
     for unit in ("B", "KB", "MB", "GB", "TB"):
         if size_bytes < 1024:
             return f"{size_bytes:.1f} {unit}"
-        size_bytes /= 1024
+        size_bytes //= 1024
     return f"{size_bytes:.1f} PB"
 
 
@@ -72,13 +74,16 @@ def main():
         return f"{format_size(size)}\n{pct:.1f}%"
 
     fig, ax = plt.subplots(figsize=(10, 7))
-    wedges, texts, autotexts = ax.pie(
+    pie_result = ax.pie(
         values,
         labels=None,
         autopct=autopct,
         startangle=140,
         pctdistance=0.75,
     )
+    wedges = pie_result[0]
+    autotexts = pie_result[2] if len(pie_result) > 2 else []
+
     for at in autotexts:
         at.set_fontsize(8)
 
