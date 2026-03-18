@@ -54,9 +54,13 @@ def main():
         path = os.path.join(parent, name)
         size = get_folder_size(path)
         sizes[name] = size
+
+    # Sort by size descending
+    sizes = dict(sorted(sizes.items(), key=lambda x: x[1], reverse=True))
+    for name, size in sizes.items():
         print(f"  {name}: {format_size(size)}")
 
-    # Filter out empty folders for the chart
+    # Filter out empty folders for the chart (already sorted by size)
     non_empty = {k: v for k, v in sizes.items() if v > 0}
     if not non_empty:
         print("\nAll folders are empty — nothing to chart.")
