@@ -20,11 +20,11 @@ def get_folder_size(path: str) -> int:
     return total
 
 
-def format_size(size_bytes: int) -> str:
+def format_size(size_bytes: float) -> str:
     for unit in ("B", "KB", "MB", "GB", "TB"):
         if size_bytes < 1024:
             return f"{size_bytes:.1f} {unit}"
-        size_bytes //= 1024
+        size_bytes /= 1024
     return f"{size_bytes:.1f} PB"
 
 
@@ -99,7 +99,7 @@ def main():
     ax.legend(wedges, legend_labels, loc="center left", bbox_to_anchor=(1, 0.5), fontsize=9)
 
     ax.set_title(
-        f"Folder sizes in: {parent}\nTotal: {format_size(total)}",
+        f"Folder sizes in: {parent}\nTotal: {format_size(total)}  ({total // 1024:,} KB)",
         pad=20,
     )
 
