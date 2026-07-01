@@ -24,7 +24,7 @@ def human_size(nbytes: int) -> str:
     for unit in ("B", "KB", "MB", "GB", "TB"):
         if nbytes < 1024:
             return f"{nbytes:.1f} {unit}"
-        nbytes /= 1024
+        nbytes //= 1024
     return f"{nbytes:.1f} PB"
 
 
